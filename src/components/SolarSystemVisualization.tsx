@@ -20,22 +20,34 @@ const SolarSystemVisualization: React.FC = () => {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
+      const container = canvas.parentElement;
+      if (!container) return;
+      
+      const size = Math.min(container.clientWidth, container.clientHeight * 1.5);
+      canvas.width = size;
+      canvas.height = size;
+      
+      // Scale the canvas for high DPI displays
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = size * dpr;
+      canvas.height = size * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = size + 'px';
+      canvas.style.height = size + 'px';
     };
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
     const planets: Planet[] = [
-      { name: 'Mercury', distance: 60, size: 3, color: '#8c7853', speed: 0.04, angle: 0 },
-      { name: 'Venus', distance: 80, size: 4, color: '#ffc649', speed: 0.03, angle: 0 },
-      { name: 'Earth', distance: 100, size: 5, color: '#6b93d6', speed: 0.02, angle: 0 },
-      { name: 'Mars', distance: 130, size: 4, color: '#c1440e', speed: 0.015, angle: 0 },
-      { name: 'Jupiter', distance: 180, size: 15, color: '#d8ca9d', speed: 0.008, angle: 0 },
-      { name: 'Saturn', distance: 220, size: 12, color: '#fad5a5', speed: 0.006, angle: 0 },
-      { name: 'Uranus', distance: 260, size: 8, color: '#4fd0e7', speed: 0.004, angle: 0 },
-      { name: 'Neptune', distance: 300, size: 8, color: '#4b70dd', speed: 0.003, angle: 0 }
+      { name: 'Mercury', distance: 40, size: 3, color: '#8c7853', speed: 0.04, angle: 0 },
+      { name: 'Venus', distance: 60, size: 4, color: '#ffc649', speed: 0.03, angle: 0 },
+      { name: 'Earth', distance: 80, size: 5, color: '#6b93d6', speed: 0.02, angle: 0 },
+      { name: 'Mars', distance: 100, size: 4, color: '#c1440e', speed: 0.015, angle: 0 },
+      { name: 'Jupiter', distance: 140, size: 12, color: '#d8ca9d', speed: 0.008, angle: 0 },
+      { name: 'Saturn', distance: 180, size: 10, color: '#fad5a5', speed: 0.006, angle: 0 },
+      { name: 'Uranus', distance: 220, size: 7, color: '#4fd0e7', speed: 0.004, angle: 0 },
+      { name: 'Neptune', distance: 260, size: 7, color: '#4b70dd', speed: 0.003, angle: 0 }
     ];
 
     let animationId: number;
@@ -127,10 +139,11 @@ const SolarSystemVisualization: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gray-700 overflow-hidden h-96">
+    <div className="relative bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gray-700 overflow-hidden h-[600px] w-full">
       <canvas
         ref={canvasRef}
         className="w-full h-full"
+        style={{ width: '100%', height: '100%', display: 'block' }}
       />
       <div className="absolute top-4 left-4 text-white">
         <h3 className="text-lg font-bold mb-1">Solar System</h3>

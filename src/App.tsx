@@ -53,12 +53,12 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen flex flex-col relative">
       <ParticleField />
       <MeteorTrail />
       <RealTimeAlerts />
       
-      <div className="relative z-10">
+      <div className="relative z-10 flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-black bg-opacity-60 backdrop-blur-xl border-b border-gray-800 shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 py-6">
@@ -70,9 +70,9 @@ const App: React.FC = () => {
                 </div>
                 <div>
                   <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    Space Prediction Center
+                    SkyGuard
                   </h1>
-                  <p className="text-sm text-gray-400 mt-1">Advanced Astronomical Monitoring System</p>
+          
                 </div>
               </div>
               <div className="text-right">
@@ -266,6 +266,9 @@ const App: React.FC = () => {
             </div>
           )}
         </main>
+
+        {/* Push footer to bottom */}
+        <div className="flex-grow"></div>
 
         {/* Footer */}
         <footer className="bg-black bg-opacity-60 backdrop-blur-xl border-t border-gray-800 mt-16 shadow-2xl">
